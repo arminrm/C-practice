@@ -8,7 +8,7 @@ int main(void)
     do
     {
         printf("Change: ");
-        scanf("%f", change);
+        scanf("%f", &change);
     }
     while (change < 0);
 
