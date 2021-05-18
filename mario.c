@@ -6,7 +6,7 @@ int main(void)
     do
     {
         printf("Size: ");
-        scanf("%d", n);
+        scanf("%d", &n);
     }
     while (n < 1 || n > 8);
 
