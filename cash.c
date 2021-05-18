@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <cs50.h>
 #include <math.h>
 
 int main(void)
@@ -8,7 +7,8 @@ int main(void)
     float change;
     do
     {
-        change = get_float("Change: ");
+        printf("Change: ");
+        scanf("%f", change);
     }
     while (change < 0);
 
