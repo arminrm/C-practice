@@ -1,6 +1,7 @@
 #include <cs50.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 // Max number of candidates
 #define MAX 9
@@ -105,7 +106,7 @@ bool vote(int rank, string name, int ranks[])
     bool found = false;
     for (int i = 0; i < candidate_count; i++)
     {
-        if (candidates[i] == name)     //candidates[i] would not equal name for some reason
+        if (strcmp(candidates[i], name) == 0)
         {
             found = true;
             ranks[rank] = i;
@@ -196,7 +197,7 @@ void sort_pairs(void)
 
     for (int i = 0; i < pair_count; i++)
     {
-        margins[i] = pairs[i].winner - pairs[i].loser;
+        margins[i] = preferences[pairs[i].winner][pairs[i].loser] - preferences[pairs[i].loser][pairs[i].winner];
     }
 
     bubbleSort(margins, pair_count);
@@ -205,11 +206,12 @@ void sort_pairs(void)
     {
         for (int j = 0; j < pair_count; j++)
         {
-            if (pairs[j].winner - pairs[j].loser == margins[i])
+            if (preferences[pairs[j].winner][pairs[j].loser] - preferences[pairs[j].loser][pairs[j].winner] == margins[i])
             {
                 temp = pairs[i];
                 pairs[i] = pairs[j];
                 pairs[j] = temp;
+                break;
             }
         }
     }
@@ -251,23 +253,27 @@ void lock_pairs(void)
 // Print the winner of the election
 void print_winner(void)
 {
-    bool winner = true;
+    bool valid = true;
 
     for (int i = 0; i < candidate_count; i++)
     {
         for (int j = 0; j < candidate_count; j++)
         {
-            if (!locked[i][j] && i != j)
+            if (locked[i][j] == false && i != j)
             {
-                winner = false;
+                if (locked[j][i] == true)
+                {
+                    valid = false;
+                }
             }
         }
 
-        if (winner)
+        if (valid)
         {
-            printf("%s", candidates[i]);
+            printf("%s\n", candidates[i]);
             break;
         }
     }
     return;
 }
+
