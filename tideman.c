@@ -259,12 +259,9 @@ void print_winner(void)
     {
         for (int j = 0; j < candidate_count; j++)
         {
-            if (locked[i][j] == false && i != j)
+            if (locked[i][j] == false && i != j && locked[j][i] == true)
             {
-                if (locked[j][i] == true)
-                {
-                    valid = false;
-                }
+                valid = false;
             }
         }
 
