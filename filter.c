@@ -1,6 +1,5 @@
 #include "helpers.h"
 #include <math.h>
-#include <stdio.h>
 
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
@@ -143,13 +142,13 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     int Gx[3][3];
     int Gy[3][3];
 
-    int Gx_blue = 0;
-    int Gx_green = 0;
-    int Gx_red = 0;
+    int Gx_blue;
+    int Gx_green;
+    int Gx_red;
 
-    int Gy_blue = 0;
-    int Gy_red = 0;
-    int Gy_green = 0;
+    int Gy_blue;
+    int Gy_red;
+    int Gy_green;
 
     //copy picture with black borders
 
@@ -209,6 +208,14 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int j = 0; j < width + 2; j++)
         {
+            Gx_blue = 0;
+            Gx_green = 0;
+            Gx_red = 0;
+
+            Gy_blue = 0;
+            Gy_red = 0;
+            Gy_green = 0;
+
             if (i != 0 && i != height + 1 && j != 0 && j != width + 1)
             {
                 for (int k = 0; k < 3; k++)
@@ -222,10 +229,10 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                         Gy_blue = Gy_blue + (Gy[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtBlue);
                         Gy_green = Gy_green + (Gy[k][h] * cimage[i - 1 + k][j - 1 +h].rgbtGreen);
                         Gy_red = Gy_red + (Gy[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtRed);
-                        
+
                     }
                 }
-                
+
                 if (round((float)sqrt(pow(Gx_blue,2) + pow(Gy_blue,2))) > 255)
                 {
                     image[i - 1][j - 1].rgbtBlue = 255;
@@ -258,4 +265,3 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
 
     return;
 }
-
