@@ -1,5 +1,6 @@
 #include "helpers.h"
 #include <math.h>
+#include <stdio.h>
 
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
@@ -214,25 +215,47 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                 {
                     for (int h = 0; h < 3; h++)
                     {
-                        Gx_blue = Gx_blue + Gx[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtBlue;
-                        Gx_green = Gx_green + Gx[k][h] * cimage[i - 1 + k][j - 1 +h].rgbtGreen;
-                        Gx_red = Gx_red + Gx[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtRed;
+                        Gx_blue = Gx_blue + (Gx[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtBlue);
+                        Gx_green = Gx_green + (Gx[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtGreen);
+                        Gx_red = Gx_red + (Gx[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtRed);
 
-                        Gy_blue = Gy_blue + Gy[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtBlue;
-                        Gy_green = Gy_green + Gy[k][h] * cimage[i - 1 + k][j - 1 +h].rgbtGreen;
-                        Gy_red = Gy_red + Gy[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtRed;
+                        Gy_blue = Gy_blue + (Gy[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtBlue);
+                        Gy_green = Gy_green + (Gy[k][h] * cimage[i - 1 + k][j - 1 +h].rgbtGreen);
+                        Gy_red = Gy_red + (Gy[k][h] * cimage[i - 1 + k][j - 1 + h].rgbtRed);
+                        
                     }
                 }
-            }
+                
+                if (round((float)sqrt(pow(Gx_blue,2) + pow(Gy_blue,2))) > 255)
+                {
+                    image[i - 1][j - 1].rgbtBlue = 255;
+                }
+                else
+                {
+                    image[i - 1][j - 1].rgbtBlue = round((float)sqrt(pow(Gx_blue,2) + pow(Gy_blue,2)));
+                }
 
-            if (i > 0 && j > 0 && i < height + 1 && j < width + 1)
-            {
-                image[i - 1][j - 1].rgbtBlue = round((float)sqrt(pow(Gx_blue,2) + pow(Gy_blue,2)));
-                image[i - 1][j - 1].rgbtGreen = round((float)sqrt(pow(Gx_green,2) + pow(Gy_green,2)));
-                image[i - 1][j - 1].rgbtRed = round((float)sqrt(pow(Gx_red,2) + pow(Gy_red,2)));
+                if (round((float)sqrt(pow(Gx_green,2) + pow(Gy_green,2))) > 255)
+                {
+                    image[i - 1][j - 1].rgbtGreen = 255;
+                }
+                else
+                {
+                    image[i - 1][j - 1].rgbtGreen = round((float)sqrt(pow(Gx_green,2) + pow(Gy_green,2)));
+                }
+
+                if (round((float)sqrt(pow(Gx_red,2) + pow(Gy_red,2))) > 255)
+                {
+                    image[i - 1][j - 1].rgbtRed = 255;
+                }
+                else
+                {
+                     image[i - 1][j - 1].rgbtRed = round((float)sqrt(pow(Gx_red,2) + pow(Gy_red,2)));
+                }
             }
         }
     }
 
     return;
 }
+
