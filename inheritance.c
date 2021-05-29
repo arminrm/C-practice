@@ -101,7 +101,6 @@ void free_family(person *p)
     if (m -> parents[0] == NULL && m -> parents[1] == NULL)
     {
         free(m);
-        free(m);
     }
     // TODO: Free parents
     else
