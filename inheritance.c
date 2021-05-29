@@ -98,10 +98,10 @@ void free_family(person *p)
 {
     person *m = p;
     // TODO: Handle base case
-    if (m -> parents[0] -> parents[0] == NULL && m -> parents[1] -> parents[1] == NULL)
+    if (m -> parents[0] == NULL && m -> parents[1] == NULL)
     {
-        free(m -> parents[0]);
-        free(m -> parents[1]);
+        free(m);
+        free(m);
     }
     // TODO: Free parents
     else
